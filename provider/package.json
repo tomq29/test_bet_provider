@@ -15,7 +15,8 @@
     "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
     "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js",
     "migrate:dev": "npx prisma migrate dev",
-    "updatePrismaClient": "npx prisma generate"
+    "updatePrismaClient": "npx prisma generate",
+    "seed": "tsx prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -30,12 +31,13 @@
     "fastify-plugin": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "^22.1.0",
+    "@types/node": "^22.7.4",
     "c8": "^10.1.2",
     "concurrently": "^9.0.0",
     "fastify-tsconfig": "^2.0.0",
     "prisma": "^5.20.0",
-    "ts-node": "^10.4.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.1",
     "typescript": "^5.2.2",
     "zod": "^3.23.8"
   }
