@@ -1,70 +1,78 @@
-// prisma/seed.ts
-
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+// Helper function to generate date based on offset from current time
+const generateDate = (daysOffset: number, hoursOffset: number) => {
+  const now = new Date();
+  now.setDate(now.getDate() + daysOffset);
+  now.setHours(now.getHours() + hoursOffset);
+  return now;
+};
+
 async function main() {
   await prisma.event.createMany({
     data: [
+      // Events from last week (passed)
       {
         coefficient: 1.75,
-        deadline: new Date(1700000000 * 1000),
-        status: 'pending',
-      },
-      {
-        coefficient: 2.1,
-        deadline: new Date(1700003600 * 1000),
-        status: 'pending',
-      },
-      {
-        coefficient: 1.95,
-        deadline: new Date(1700007200 * 1000),
-        status: 'pending',
-      },
-      {
-        coefficient: 2.5,
-        deadline: new Date(1700010800 * 1000),
+        deadline: generateDate(-7, -2), // 7 days ago, 2 hours earlier
         status: 'first_team_won',
       },
       {
-        coefficient: 1.85,
-        deadline: new Date(1700014400 * 1000),
+        coefficient: 2.1,
+        deadline: generateDate(-5, -3), // 5 days ago, 3 hours earlier
+        status: 'first_team_won',
+      },
+      {
+        coefficient: 1.95,
+        deadline: generateDate(-3, -1), // 3 days ago, 1 hour earlier
         status: 'second_team_won',
+      },
+      // Events for this week (upcoming)
+      {
+        coefficient: 2.5,
+        deadline: generateDate(0, 4), // Today, 4 hours later
+        status: 'pending',
+      },
+      {
+        coefficient: 1.85,
+        deadline: generateDate(1, 6), // Tomorrow, 6 hours later
+        status: 'pending',
       },
       {
         coefficient: 2.0,
-        deadline: new Date(1700018000 * 1000),
+        deadline: generateDate(2, 2), // 2 days from now, 2 hours later
         status: 'pending',
       },
       {
         coefficient: 1.6,
-        deadline: new Date(1700021600 * 1000),
+        deadline: generateDate(3, 1), // 3 days from now, 1 hour later
         status: 'pending',
       },
       {
         coefficient: 2.2,
-        deadline: new Date(1700025200 * 1000),
+        deadline: generateDate(4, 3), // 4 days from now, 3 hours later
         status: 'pending',
       },
       {
         coefficient: 1.9,
-        deadline: new Date(1700028800 * 1000),
+        deadline: generateDate(5, 0), // 5 days from now, at this hour
         status: 'pending',
       },
       {
         coefficient: 2.05,
-        deadline: new Date(1700032400 * 1000),
+        deadline: generateDate(6, 5), // 6 days from now, 5 hours later
         status: 'pending',
       },
       {
         coefficient: 1.7,
-        deadline: new Date(1700036000 * 1000),
+        deadline: generateDate(7, 4), // 7 days from now, 4 hours later
         status: 'pending',
       },
       {
         coefficient: 2.3,
-        deadline: new Date(1700039600 * 1000),
+        deadline: generateDate(7, 6), // 7 days from now, 6 hours later
         status: 'pending',
       },
     ],

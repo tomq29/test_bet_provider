@@ -16,7 +16,7 @@
     "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js",
     "migrate:dev": "npx prisma migrate dev",
     "updatePrismaClient": "npx prisma generate",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "prisma migrate reset && tsx prisma/seed.ts"
   },
   "keywords": [],
   "author": "",

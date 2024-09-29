@@ -13,8 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       Int    @id @default(autoincrement())
-  login    String
-  password String
+model Bet {
+  id           Int      @id @default(autoincrement())
+  eventID      Int
+  amount       Float
+  potentialWin Float
+  status       Status   @default(pending)
+  createdAt    DateTime @default(now())
+}
+
+enum Status {
+  pending
+  won
+  lost
 }

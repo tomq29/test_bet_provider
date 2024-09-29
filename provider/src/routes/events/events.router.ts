@@ -13,7 +13,7 @@ const eventUpdateBody = z.object({
 });
 
 const reqParam = z.object({
-  id: z.string(),
+  id: z.coerce.number(),
 });
 
 const eventsRouter: FastifyPluginAsync = async (
@@ -32,10 +32,10 @@ const eventsRouter: FastifyPluginAsync = async (
   fastify.get('/:id', async function (req, reply) {
     try {
       const { id } = reqParam.parse(req.params);
-      const event = await prisma.event.findUnique({ where: { id: +id } });
+      const event = await prisma.event.findUnique({ where: { id } });
 
       if (!event) {
-        return reply.code(404).send({ data: 'User not found' });
+        return reply.code(404).send({ data: 'Event not found' });
       }
 
       return reply.code(200).send({ data: event });
@@ -61,14 +61,14 @@ const eventsRouter: FastifyPluginAsync = async (
       const { status } = eventUpdateBody.parse(req.body);
       const { id } = reqParam.parse(req.params);
 
-      const event = await prisma.event.findUnique({ where: { id: +id } });
+      const event = await prisma.event.findUnique({ where: { id } });
 
       if (!event) {
-        return reply.code(404).send({ data: 'User not found' });
+        return reply.code(404).send({ data: 'Event not found' });
       }
 
       const result = await prisma.event.update({
-        where: { id: +id },
+        where: { id },
         data: { status },
       });
       return reply.code(200).send({ data: result });

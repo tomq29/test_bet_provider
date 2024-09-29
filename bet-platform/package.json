@@ -14,8 +14,9 @@
     "watch:ts": "tsc -w",
     "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
     "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js",
-    "migrate:dev": "npx prisma migrate dev",
-    "updatePrismaClient": "npx prisma generate"
+    "DB:migrate:dev": "npx prisma migrate dev",
+    "updatePrismaClient": "npx prisma generate",
+    "DB:reset": "prisma migrate reset"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "@fastify/formbody": "^8.0.1",
     "@fastify/sensible": "^6.0.0",
     "@prisma/client": "^5.20.0",
+    "axios": "^1.7.7",
     "fastify": "^5.0.0",
     "fastify-cli": "^7.0.1",
     "fastify-plugin": "^5.0.0"
