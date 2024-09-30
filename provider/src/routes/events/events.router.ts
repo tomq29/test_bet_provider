@@ -1,10 +1,12 @@
 import { FastifyPluginAsync } from 'fastify';
 import { z } from 'zod';
 import { prisma } from '../../utils/prisma.js';
+import axios from 'axios';
+import { BET_PLATFORM_URL } from '../../utils/betPlatform.url.js';
 
 const eventsCreateBody = z.object({
-  coefficient: z.number(),
-  deadline: z.number(),
+  coefficient: z.number().positive(),
+  deadline: z.number().int().positive(),
 });
 const StatusEnum = z.enum(['pending', 'first_team_won', 'second_team_won']);
 
@@ -71,6 +73,19 @@ const eventsRouter: FastifyPluginAsync = async (
         where: { id },
         data: { status },
       });
+
+      if (status !== 'pending') {
+        try {
+          const response = await axios.post(
+            `${BET_PLATFORM_URL}/event-updates`,
+            result
+          );
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
       return reply.code(200).send({ data: result });
     } catch (error) {
       return reply.status(500).send({ error });
